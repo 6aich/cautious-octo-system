@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    body {
+      background: black;
+      color: #00ff00;
+      font-family: monospace;
+      padding: 20px;
+    }
+    #screen {
+      white-space: pre-line;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h2></h2>
+<p>(This is FAKE and for fun only)</p>
+
+<div id="screen"></div>
+
+<button onclick="startHack()">Start Fake Hack</button>
+
+<script>
+const lines = [
+  "Connecting to server...",
+  "Bypassing firewall...",
+  "Accessing encrypted data...",
+  "Decrypting Gmail database...",
+  "Downloading emails...",
+  " ACCESS GRANTED ",
+  "",
+  "😂 Just kidding!",
+  "This is only a fake simulation.",
+  "No real hacking happened."
+];
+
+let i = 0;
+
+function startHack() {
+  i = 0;
+  document.getElementById("screen").innerText = "";
+  const interval = setInterval(() => {
+    if (i < lines.length) {
+      document.getElementById("screen").innerText += lines[i] + "\n";
+      i++;
+    } else {
+      clearInterval(interval);
+    }
+  }, 700);
+}
+</script>
+
+</body>
+</html>
