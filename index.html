@@ -1,63 +1,108 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title></title>
-  <style>
-    body {
-      background: black;
-      color: #00ff00;
-      font-family: monospace;
-      padding: 20px;
-    }
-    #screen {
-      white-space: pre-line;
-      font-size: 16px;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>SECURITY BREACH</title>
+
+<style>
+  body {
+    background: black;
+    color: #00ff00;
+    font-family: monospace;
+    margin: 0;
+    padding: 20px;
+    animation: flicker 3s infinite;
+  }
+
+  @keyframes flicker {
+    0% { background:#000; }
+    50% { background:#050000; }
+    100% { background:#000; }
+  }
+
+  #terminal {
+    white-space: pre-line;
+    font-size: 16px;
+  }
+
+  .alert {
+    color: red;
+    font-weight: bold;
+    animation: blink 0.8s infinite;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  button {
+    margin-top: 15px;
+    padding: 12px 20px;
+    background: black;
+    color: red;
+    border: 2px solid red;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .shake {
+    animation: shake 0.2s infinite;
+  }
+
+  @keyframes shake {
+    0% { transform: translate(0,0); }
+    25% { transform: translate(2px,1px); }
+    50% { transform: translate(-2px,-1px); }
+    75% { transform: translate(1px,2px); }
+    100% { transform: translate(0,0); }
+  }
+</style>
 </head>
+
 <body>
 
-<h2></h2>
-<p>(This is FAKE and for fun only)</p>
+<h2 class="alert">⚠️ SYSTEM BREACH DETECTED ⚠️</h2>
 
-<div id="screen"></div>
+<div id="terminal"></div>
 
-<button onclick="startHack()">Start Fake Hack</button>
+<button onclick="start()">INITIATE SEQUENCE</button>
+
+<!-- 🔊 ADD YOUR SCARY SOUND FILE HERE -->
+<audio id="scary" src="scary.mp3" loop></audio>
 
 <script>
 const lines = [
-  "Connecting to server...",
-  "Bypassing firewall...",
-  "Accessing encrypted data...",
-  "Decrypting Gmail database...",
-  "Downloading emails...",
-  " ACCESS GRANTED ",
+  "[BOOT] Initialising kernel...",
+  "[OK] Kernel loaded",
+  "[SCAN] Tracing network routes...",
+  "[WARN] Unknown IP detected",
+  "[ALERT] Firewall integrity compromised",
+  "[DECRYPT] Brute-force engine running...",
   "",
-  "😂 Just kidding!",
-  "This is only a fake simulation.",
-  "No real hacking happened."
+  "",
+  "████ ACCESS GRANTED ████",
+  "",
+  "",
+  "GIVE MONEY"
 ];
 
 let i = 0;
 
-function startHack() {
+function start() {
+  document.body.classList.add("shake");
+  document.getElementById("terminal").innerText = "";
+  document.getElementById("scary").play();
+
   i = 0;
-  document.getElementById("screen").innerText = "";
   const interval = setInterval(() => {
     if (i < lines.length) {
-      document.getElementById("screen").innerText += lines[i] + "\n";
+      document.getElementById("terminal").innerText += lines[i] + "\n";
       i++;
     } else {
       clearInterval(interval);
+      document.body.classList.remove("shake");
     }
-  }, 700);
+  }, 600);
 }
 </script>
 
