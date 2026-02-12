@@ -15,6 +15,7 @@ body {
     align-items: center;
     height: 100vh;
     overflow: hidden;
+    transition: background 0.5s;
 }
 
 img {
@@ -32,39 +33,18 @@ button {
     border-radius: 8px;
 }
 
-#glitchOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    opacity: 0;
-}
-
+/* STRONG RGB GLITCH */
 .glitch {
-    animation: glitch 0.1s infinite;
+    animation: glitch 0.08s infinite;
 }
 
 @keyframes glitch {
-    0% { transform: translate(5px, -5px); filter: hue-rotate(0deg); }
-    20% { transform: translate(-5px, 5px); filter: hue-rotate(90deg); }
-    40% { transform: translate(5px, 5px); filter: hue-rotate(180deg); }
-    60% { transform: translate(-5px, -5px); filter: hue-rotate(270deg); }
-    80% { transform: translate(5px, -5px); filter: hue-rotate(360deg); }
-    100% { transform: translate(0,0); filter: hue-rotate(0deg); }
-}
-
-.shake {
-    animation: shake 0.08s infinite;
-}
-
-@keyframes shake {
-    0% { transform: translate(2px,2px); }
-    25% { transform: translate(-2px,-2px); }
-    50% { transform: translate(2px,-2px); }
-    75% { transform: translate(-2px,2px); }
-    100% { transform: translate(2px,2px); }
+    0% { filter: contrast(200%) brightness(200%) hue-rotate(0deg); }
+    20% { transform: translate(-10px, 10px); filter: hue-rotate(90deg); }
+    40% { transform: translate(10px, -10px); filter: hue-rotate(180deg); }
+    60% { transform: translate(-10px, -10px); filter: hue-rotate(270deg); }
+    80% { transform: translate(10px, 10px); filter: hue-rotate(360deg); }
+    100% { transform: translate(0,0); filter: none; }
 }
 </style>
 </head>
@@ -74,29 +54,29 @@ button {
 <img src="https://upload.wikimedia.org/wikipedia/commons/5/52/Safari_browser_logo.svg">
 <button onclick="startVirus()">⚠ WARNING virus detected</button>
 
-<audio id="metal">
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
-</audio>
-
 <script>
 function startVirus() {
 
     const screen = document.getElementById("screen");
-    const audio = document.getElementById("metal");
 
-    audio.currentTime = 0;
-    audio.play();
+    // 🔊 Guaranteed sound using Web Audio API
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioCtx.createOscillator();
+    oscillator.type = "sawtooth";
+    oscillator.frequency.setValueAtTime(200, audioCtx.currentTime);
+    oscillator.connect(audioCtx.destination);
+    oscillator.start();
 
+    // Glitch effect
     screen.classList.add("glitch");
-    screen.classList.add("shake");
 
-    // After 2.5 seconds → blackout
+    // After 2 seconds → blackout
     setTimeout(() => {
+        oscillator.stop();
         screen.classList.remove("glitch");
-        screen.classList.remove("shake");
         document.body.innerHTML = "";
         document.body.style.background = "black";
-    }, 2500);
+    }, 2000);
 }
 </script>
 
