@@ -1,108 +1,86 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>SECURITY BREACH</title>
-
+<title>Fake Virus Warning</title>
 <style>
-  body {
-    background: black;
-    color: #00ff00;
-    font-family: monospace;
+body {
     margin: 0;
-    padding: 20px;
-    animation: flicker 3s infinite;
-  }
-
-  @keyframes flicker {
-    0% { background:#000; }
-    50% { background:#050000; }
-    100% { background:#000; }
-  }
-
-  #terminal {
-    white-space: pre-line;
-    font-size: 16px;
-  }
-
-  .alert {
-    color: red;
-    font-weight: bold;
-    animation: blink 0.8s infinite;
-  }
-
-  @keyframes blink {
-    50% { opacity: 0; }
-  }
-
-  button {
-    margin-top: 15px;
-    padding: 12px 20px;
     background: black;
-    color: red;
-    border: 2px solid red;
-    font-size: 16px;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+img {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+button {
+    background: red;
+    color: white;
+    font-size: 20px;
+    padding: 15px 30px;
+    border: none;
     cursor: pointer;
-  }
+    border-radius: 8px;
+}
 
-  .shake {
-    animation: shake 0.2s infinite;
-  }
+button:hover {
+    background: darkred;
+}
 
-  @keyframes shake {
-    0% { transform: translate(0,0); }
-    25% { transform: translate(2px,1px); }
-    50% { transform: translate(-2px,-1px); }
-    75% { transform: translate(1px,2px); }
-    100% { transform: translate(0,0); }
-  }
+#timer {
+    margin-top: 15px;
+    font-size: 24px;
+    display: none;
+}
 </style>
 </head>
-
 <body>
 
-<h2 class="alert">⚠️ SYSTEM BREACH DETECTED ⚠️</h2>
+<!-- Safari Logo -->
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/52/Safari_browser_logo.svg" alt="Safari Logo">
 
-<div id="terminal"></div>
+<!-- Warning Button -->
+<button onclick="startVirus()">⚠️ WARNING virus detected</button>
 
-<button onclick="start()">INITIATE SEQUENCE</button>
+<!-- Countdown -->
+<div id="timer">0:30</div>
 
-<!-- 🔊 ADD YOUR SCARY SOUND FILE HERE -->
-<audio id="scary" src="scary.mp3" loop></audio>
+<!-- Audio (replace link if you want a different sound) -->
+<audio id="alarm">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
 
 <script>
-const lines = [
-  "[BOOT] Initialising kernel...",
-  "[OK] Kernel loaded",
-  "[SCAN] Tracing network routes...",
-  "[WARN] Unknown IP detected",
-  "[ALERT] Firewall integrity compromised",
-  "[DECRYPT] Brute-force engine running...",
-  "",
-  "",
-  "████ ACCESS GRANTED ████",
-  "",
-  "",
-  "GIVE MONEY"
-];
-
-let i = 0;
-
-function start() {
-  document.body.classList.add("shake");
-  document.getElementById("terminal").innerText = "";
-  document.getElementById("scary").play();
-
-  i = 0;
-  const interval = setInterval(() => {
-    if (i < lines.length) {
-      document.getElementById("terminal").innerText += lines[i] + "\n";
-      i++;
-    } else {
-      clearInterval(interval);
-      document.body.classList.remove("shake");
-    }
-  }, 600);
+function startVirus() {
+    let audio = document.getElementById("alarm");
+    let timer = document.getElementById("timer");
+    
+    audio.currentTime = 0;
+    audio.play();
+    
+    timer.style.display = "block";
+    
+    let timeLeft = 30;
+    timer.textContent = "0:30";
+    
+    let countdown = setInterval(function() {
+        timeLeft--;
+        let seconds = timeLeft < 10 ? "0" + timeLeft : timeLeft;
+        timer.textContent = "0:" + seconds;
+        
+        if (timeLeft <= 0) {
+            clearInterval(countdown);
+            timer.style.display = "none";
+            audio.pause();
+        }
+    }, 1000);
 }
 </script>
 
