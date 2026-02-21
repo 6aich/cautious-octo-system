@@ -59,24 +59,43 @@ function startVirus() {
 
     const screen = document.getElementById("screen");
 
-    // 🔊 Guaranteed sound using Web Audio API
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioCtx.createOscillator();
-    oscillator.type = "sawtooth";
-    oscillator.frequency.setValueAtTime(200, audioCtx.currentTime);
-    oscillator.connect(audioCtx.destination);
-    oscillator.start();
+    // Dramatic flashing background
+    let flashes = 0;
+    const flashInterval = setInterval(() => {
+        document.body.style.background =
+            flashes % 2 === 0 ? "darkred" : "black";
+        flashes++;
+    }, 100);
 
-    // Glitch effect
+    // Intense glitch effect
     screen.classList.add("glitch");
 
-    // After 2 seconds → blackout
-    setTimeout(() => {
-        oscillator.stop();
-        screen.classList.remove("glitch");
-        document.body.innerHTML = "";
-        document.body.style.background = "black";
-    }, 2000);
+    // Fake terminal text
+    const warning = document.createElement("h1");
+    warning.textContent = "SYSTEM OVERRIDE INITIATED";
+    warning.style.color = "red";
+    document.body.appendChild(warning);
+
+    // Add countdown
+    let count = 5;
+    const countdown = document.createElement("h2");
+    countdown.style.color = "white";
+    document.body.appendChild(countdown);
+
+    const timer = setInterval(() => {
+        countdown.textContent = "Stabilizing in " + count + "...";
+        count--;
+
+        if (count < 0) {
+            clearInterval(timer);
+            clearInterval(flashInterval);
+            screen.classList.remove("glitch");
+            document.body.style.background = "black";
+            warning.textContent = "SYSTEM STABILIZED ✔";
+            warning.style.color = "lime";
+            countdown.remove();
+        }
+    }, 1000);
 }
 </script>
 
